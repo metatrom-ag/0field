@@ -1,0 +1,5 @@
+# Scene
+0field's Publish keeps getting E404 from npm (v0.14.2, v0.14.3 rerun twice, v0.15.0); v0.15.0's GitHub release was made automatically.
+# Decided
+- Philipp: check on npmjs.com, add verbose logging, try without waiting for Oasis (yes).
+- Claude: a manual start (workflow_dispatch) rather than a test tag, as tags are Philipp's; it makes no release.
