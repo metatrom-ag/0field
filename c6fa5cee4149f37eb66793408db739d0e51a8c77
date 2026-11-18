@@ -1,0 +1,8 @@
+# Scene
+The trusted publisher for @0field/oasis now matches publish.yml: E404 became E403 (no publish permission, fixed by Philipp with --allow-publish), then 422 — provenance asks package.json's repository.url to be https://github.com/metatrom-ag/0field, and the dist names none.
+# Decided
+- Philipp: commit, open and merge this fix (yes).
+- Claude: the repository is set in 0field's publish.yml, which knows its own address, rather than in Oasis's dist.yml; before the GitHub release, so tarball and npm package match.
+- Philipp: the dist commits CI pushes (oasis vX) and GitHub's merge commits carry no continuity note (yes to the lean).
+# Later
+- v0.16.0 reaches npm through a manual Publish on main, as a rerun of the tag's run takes the tag's old workflow file. The git+https form is untried against npm's registry check until then.
