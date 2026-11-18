@@ -1,0 +1,6 @@
+{
+  "@context": "oasis://metatrom-ag/Cli/corpus.jsonld",
+  "@type": "Cli",
+  "bin": "oasis",
+  "root": { "@id": "oasis://metatrom-ag/Oasis" }
+}
