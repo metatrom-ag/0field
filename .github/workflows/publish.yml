@@ -1,0 +1,38 @@
+# Purpose: each release of oasis that reaches this repository is on npm as
+# @0field/oasis.
+#
+# Intention: runs on a tag `v*` that metatrom-ag/Oasis's Tag workflow pushes
+# with the dist it built — the package `npm pack` makes, named
+# @0field/oasis at the tag's version — and publishes this checkout through
+# npm's trusted publishing, configured on npmjs.com for this file. It runs
+# on a runner GitHub hosts, as trusted publishing supports no self-hosted
+# one (https://docs.npmjs.com/trusted-publishers); npm adds provenance, as
+# this repository is public. It calls no reusable workflow, as a public
+# repository calls only public ones.
+name: Publish
+
+on:
+  push:
+    tags: ['v*']
+
+permissions:
+  contents: read
+  id-token: write
+
+jobs:
+  npm-publish:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@v5
+        with:
+          node-version: 24
+          registry-url: https://registry.npmjs.org
+      - name: Publish
+        run: |
+          # Trusted publishing takes npm 11.5.1 or newer.
+          npm install --global npm@^11.5.1
+          npm publish --access public
