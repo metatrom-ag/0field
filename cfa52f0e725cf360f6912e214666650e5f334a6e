@@ -1,0 +1,6 @@
+# Scene
+0field's first commit, for metatrom-ag/Oasis#49: the public repository that holds only the dist of @0field/oasis.
+# Decided
+- Philipp: 0field holds just the dist; Oasis pushes it on each tag (lean); commit and merge (yes).
+# Later
+- Philipp publishes the first release by hand and configures the trusted publisher on npmjs.com for publish.yml.
