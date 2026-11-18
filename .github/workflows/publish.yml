@@ -35,6 +35,9 @@ jobs:
         with:
           node-version: 24
           registry-url: https://registry.npmjs.org
+      - name: Name this repository
+        # npm checks provenance against package.json's repository, and the dist names none, as Oasis stays private.
+        run: npm pkg set repository.type=git "repository.url=git+https://github.com/$GITHUB_REPOSITORY.git"
       - name: Release on GitHub
         if: github.ref_type == 'tag'
         run: |
