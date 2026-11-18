@@ -1,5 +1,5 @@
 # Purpose: each release of oasis that reaches this repository is on npm as
-# @0field/oasis.
+# @0field/oasis, and on GitHub as a release.
 #
 # Intention: runs on a tag `v*` that metatrom-ag/Oasis's Tag workflow pushes
 # with the dist it built — the package `npm pack` makes, named
@@ -7,8 +7,10 @@
 # npm's trusted publishing, configured on npmjs.com for this file. It runs
 # on a runner GitHub hosts, as trusted publishing supports no self-hosted
 # one (https://docs.npmjs.com/trusted-publishers); npm adds provenance, as
-# this repository is public. It calls no reusable workflow, as a public
-# repository calls only public ones.
+# this repository is public. Before that, it makes the tag a GitHub release
+# carrying the package's tarball, so a release stands even where npm refuses.
+# It calls no reusable workflow, as a public repository calls only public
+# ones.
 name: Publish
 
 on:
@@ -16,7 +18,7 @@ on:
     tags: ['v*']
 
 permissions:
-  contents: read
+  contents: write
   id-token: write
 
 jobs:
@@ -31,6 +33,14 @@ jobs:
         with:
           node-version: 24
           registry-url: https://registry.npmjs.org
+      - name: Release on GitHub
+        run: |
+          # A rerun after npm refused finds the release already standing, and goes on to npm.
+          if gh release view "$GITHUB_REF_NAME" > /dev/null 2>&1; then exit 0; fi
+          tarball=$(npm pack --silent | tail -n 1)
+          gh release create "$GITHUB_REF_NAME" "$tarball" --title "oasis $GITHUB_REF_NAME" --notes "npm i -g @0field/oasis@${GITHUB_REF_NAME#v}"
+        env:
+          GH_TOKEN: ${{ github.token }}
       - name: Publish
         run: |
           # Trusted publishing takes npm 11.5.1 or newer.
