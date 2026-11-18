@@ -1,0 +1,7 @@
+# Scene
+0field's publish.yml gains a GitHub release per tag, for metatrom-ag/Oasis#49.
+# Decided
+- Philipp: a GitHub release per tag; he publishes 0.14.2 to npm by hand (a token is no option since npm's GitHub integration).
+- Claude: the release step stands in the npm-publish job, before npm publish, so the runner audit's exception covers it and a release stands where npm refuses; a rerun skips an existing release.
+# Later
+- v0.14.2's Publish ran on the old file; its release is made once by hand.
